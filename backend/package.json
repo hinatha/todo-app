@@ -1,0 +1,24 @@
+{
+  "name": "flask_helloworld",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hinatha/flask_helloworld.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hinatha/flask_helloworld/issues"
+  },
+  "homepage": "https://github.com/hinatha/flask_helloworld#readme",
+  "devDependencies": {
+    "serverless-python-requirements": "^5.2.0",
+    "serverless-wsgi": "^2.0.2"
+  }
+}
