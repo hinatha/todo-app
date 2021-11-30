@@ -1,5 +1,4 @@
-import string
-import random
+import uuid
 import boto3
 import json
 import os
@@ -9,7 +8,7 @@ TABLE_NAME = os.environ['DYNAMODB_TABLE']
 table = dynamodb.Table(TABLE_NAME)
 
 def create(body):
-    task_id = "".join(random.choices(string.ascii_letters + string.digits, k=12))
+    task_id = uuid.uuid4()
     task = body["task"]
     detail = body["detail"]
     item = {

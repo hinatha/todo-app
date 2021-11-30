@@ -9,7 +9,7 @@ load_dotenv()
 app = Flask(__name__)
 
 backend_url = os.getenv('BACKEND_URL', 'http://localhost:5000')
-create_url = os.getenv('CREATE_URL', 'http://localhost:5000')
+create_url = f'''{backend_url}/tasks'''
 
 
 @app.route("/", methods=['GET'])

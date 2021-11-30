@@ -17,6 +17,8 @@ provider:
   runtime: python3.9
   stage: dev
   region: ap-northeast-1
+  lambdaHashingVersion: 20201221
+  versionFunctions: false
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
   iamRoleStatements:
@@ -36,11 +38,13 @@ functions:
     handler: wsgi.handler
     events:
       - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http:
+        path: /tasks
+        method: post
 
 resources:
   Resources:
-    surveysTable: 
+    taskTable: 
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:provider.environment.DYNAMODB_TABLE}

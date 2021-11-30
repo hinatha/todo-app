@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello():
     return "Hello World!"
 
-@app.route("/createtask", methods=['POST'])
+@app.route("/tasks", methods=['POST'])
 def create_task():
     event = request.get_json()
     return task.create(event)
