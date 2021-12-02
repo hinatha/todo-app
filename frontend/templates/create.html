@@ -2,13 +2,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tasks.js') }}"></script>
     <title>Create task</title>
 </head>
 <body>
-    <form action="/createtask" method="post">
-        <label for="task">TASK</label>：<input id="task" type="text" name="task"><br>
-        <label for="detail">DETAIL</label><input id="detail" type="text" name="detail"><br>
-        <button type="submit" class="btn btn-primary btn-lg">RESISTER</button> 
+    <section>
+    <form class="addTask">
+        TASK:<input type="text" name="task" class="task"><br>
+        DETAIL:<input type="text" name="detail" class="detail"><br>
+        <input id="add" type="button" class="btn" value="resister"></input>
     </form>
+    <a href="/" role="button">RETURN HOME</a>
+    </section>
 </body>
 </html>

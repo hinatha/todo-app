@@ -37,10 +37,10 @@ functions:
   app:
     handler: wsgi.handler
     events:
-      - http: ANY /
       - http:
-        path: /tasks
-        method: post
+          path: /tasks
+          method: post
+        
 
 resources:
   Resources:
