@@ -1,14 +1,18 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create task</title>
+    <title>TASK REGISTRATION</title>
 </head>
 <body>
+    <h2>Register a new task</h2>
     <form action="/tasks" method="post">
-        <label for="task">TASK:</label><input id="task" type="text" name="task"><br>
-        <label for="detail">DETAIL:</label><input id="detail" type="text" name="detail"><br>
+        <label for="task">TASK: </label><input id="task" type="text" name="task"><br>
+        <label for="detail">DETAIL: </label><input id="detail" type="text" name="detail"><br>
         <button type="submit" class="btn btn-primary btn-lg">RESISTER</button>
+        <br>
+        <a href="/">Top Page</a>
     </form>
 </body>
 </html>
