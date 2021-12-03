@@ -5,6 +5,10 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/createtask" role="button">CREATE NEW TASK</a>
+    <h2>Tasks</h2><a href="/createtask" role="button">CREATE NEW TASK</a>
+    {% for i in l_task %}
+    <p>・{{ i }}</p>
+    <a href="/detail" role="botton" >detail</a>
+    {% endfor %}
 </body>
 </html>

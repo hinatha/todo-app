@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from dotenv import load_dotenv
 import requests
+import ast
 
 import os
 
@@ -14,8 +15,11 @@ task_url = f'''{backend_url}/tasks'''
 
 @app.route("/")
 def index():
-    requests.get(task_url)
-    return render_template('index.html')
+    r = requests.get(task_url)
+    l = ast.literal_eval(r.text)
+    l_task = [d.get("task") for d in l]
+    l_id = [d.get("task_id")for d in l]
+    return render_template('index.html', l_task=l_task, l_id=l_id)
 
 @app.route("/createtask")
 def create():
@@ -31,7 +35,6 @@ def add():
     }
     requests.post(task_url, json=payload)
     return redirect('/')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
