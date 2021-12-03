@@ -1,19 +1,23 @@
-from flask import Flask,request
+from flask import Flask, request
 from entities import task
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
 
 @app.route("/")
-def hello():
-    return "Hello World!"
+def health():
+    return "I'm alive!"
 
-@app.route("/tasks", methods=['POST'])
+@app.route("/tasks", methods=["POST"])
 def create_task():
-    event = request.get_json()
-    return task.create(event)
+    print("### execute create_task method")
+    body = request.get_json()
+    print("PRINT: body")
+    print(body)
+    return task.create(body)
 
-@app.route("/tasks", methods=['GET'])
-def get_task():
-    return task.get()
-
+@app.route("/tasks", methods=["GET"])
+def get_all_task():
+    print("### execute get_all_task method")
+    return task.get_all()
 
