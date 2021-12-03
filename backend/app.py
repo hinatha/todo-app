@@ -12,6 +12,8 @@ def create_task():
     event = request.get_json()
     return task.create(event)
 
-   
+@app.route("/tasks", methods=['GET'])
+def get_task():
+    return task.get()
 
 

@@ -40,6 +40,13 @@ functions:
       - http:
           path: /tasks
           method: post
+      - http:
+          path: /tasks
+          method: get
+      - http:
+          path: /
+          method: get
+      
         
 
 resources:

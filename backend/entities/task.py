@@ -18,3 +18,10 @@ def create(body):
         }
     table.put_item(Item=item)
     return json.dumps(item)
+
+def get():
+    response = table.scan()
+    items = response['Items']
+    return json.dumps(items)
+
+
