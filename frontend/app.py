@@ -10,11 +10,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# What is this for? I'm not sure about this function.
-app.config['SECRET_KEY'] = '123456789'
+app.config["SECRET_KEY"] = "123456789"
+app.config["WTF_CSRF_ENABLED"] = True
 
 backend_url = os.getenv("BACKEND_URL", "http://localhost:5000")
-task_url = f'''{backend_url}/tasks'''
+task_url = f"""{backend_url}/tasks"""
 
 # Set task form to add task
 class TaskForm(FlaskForm):
@@ -27,28 +27,28 @@ def index():
     r = requests.get(task_url)
     r.raise_for_status()
     tasks = r.json()
+    print("alive")
     return render_template("index.html", tasks=tasks)
 
-@app.route("/create-task", methods=["GET"])
+@app.route("/create-task", methods=["GET", "POST"])
 def create():
     form = TaskForm()
-    return render_template("create.html", form=form)
-
-@app.route("/tasks", methods=["POST"])
-def add_task():
-    print("execute add_task method")
-    form = TaskForm()
-
-    if form.validate_on_submit():
-        task = request.form.get("task")
-        detail = request.form.get("detail")
-        payload = {
-            "task":task,
-            "detail":detail
-        }
-        r = requests.post(task_url, json=payload)
-        r.raise_for_status()
-        return redirect("/")
+    if request.method == "GET":
+        print("alive")
+        return render_template("create.html", form=form)
+    else:
+        if form.validate_on_submit():
+            task = request.form.get("task")
+            detail = request.form.get("detail")
+            payload = {
+                "task":task,
+                "detail":detail
+            }
+            r = requests.post(task_url, json=payload)
+            r.raise_for_status()
+            return redirect("/")
+        else:
+            return render_template("create.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=True)
