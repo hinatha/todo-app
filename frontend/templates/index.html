@@ -2,9 +2,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TODO APP</title>
 </head>
 <body>
-    <a href="/createtask" role="button">CREATE NEW TASK</a>
+    <h1>TOP PAGE</h1>
+
+    <a href="/create-task" role="button">TASK RESISTER</a>
+    {% for task in tasks %}
+        <h2>TASK: {{ task.task }}</h2>
+        <p>DETAIL: {{ task.detail }}</p>
+        <a href="/detail/{{ task.task_id }}" role="button">Detail</a>
+        <a href="/update/{{ task.task_id }}" role="button">Update</a>
+        <a href="/delete/{{ task.task_id }}" role="button">Delete</a>
+    {% endfor %}
 </body>
 </html>
