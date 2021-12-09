@@ -51,4 +51,19 @@ def get_all():
         raise Exception((f'''An exception occurred while executing table.scan method. [RETURN CODE: {rc}][ERROR: {err}]'''))
     return jsonify(items)
 
+def get(taskId):
+    '''
+    Execute Get API
+    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Get.html
+    '''
+    logger.info("### execute get method")
+    try:
+        response = table.get_item(Key={"task_id": taskId})
+        item = response["Item"]
+    except Exception as err:
+        rc = 1
+        logger.error(f'''An exception occured while executing table.get method. [RETURN CODE: {rc}][ERROR: {err}]''')
+        raise Exception((f'''An exception occured while executing table.get method. [RETURN CODE: {rc}][ERROR: {err}]'''))
+    return jsonify(item)
+
 

@@ -46,8 +46,10 @@ functions:
       - http:
           path: /
           method: get
-      
-        
+      - http:
+          path: /tasks/{taskId}
+          method: get
+
 
 resources:
   Resources:
