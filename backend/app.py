@@ -21,4 +21,9 @@ def get_all_task():
     print("### execute get_all_task method")
     return task.get_all()
 
+@app.route("/tasks/<taskId>", methods=["GET"])
+def get_task(taskId):
+    print("### execute get_task method")
+    return task.get(taskId)
+
 
