@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "123456789"
 app.config["WTF_CSRF_ENABLED"] = True
 
+
 # Difine API url
 backend_url = os.getenv("BACKEND_URL", "http://localhost:5000")
 task_url = f"""{backend_url}/tasks"""
@@ -35,7 +36,6 @@ def index():
     r = requests.get(task_url)
     r.raise_for_status()
     tasks = r.json()
-    print("alive")
     return render_template("index.html", tasks=tasks)
 
 @app.route("/create-task", methods=["GET", "POST"])
@@ -43,7 +43,6 @@ def create():
     form = TaskForm()
     # Display create page
     if request.method == "GET":
-        print("alive")
         return render_template("create.html", form=form)
     else:
         # Send form to server
@@ -60,6 +59,15 @@ def create():
         # In case of error
         else:
             return render_template("create.html", form=form)
+
+@app.route("/detail/<taskId>", methods=["GET"])
+def detail(taskId):
+    taskId_url = f"""{task_url}/{taskId}"""
+    r = requests.get(taskId_url)
+    r.raise_for_status()
+    tasks = r.json()
+    print("alive")
+    return render_template("detail.html", tasks=tasks)
 
 if __name__ == "__main__":
     app.run(debug=True)
