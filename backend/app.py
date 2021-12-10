@@ -26,4 +26,7 @@ def get_task(taskId):
     print("### execute get_task method")
     return task.get(taskId)
 
-
+@app.route("/tasks/<taskId>", methods=["DELETE"])
+def delete_task(taskId):
+    print("###e execute delete_task method")
+    return task.delete(taskId)

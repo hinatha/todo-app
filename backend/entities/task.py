@@ -66,4 +66,18 @@ def get(taskId):
         raise Exception((f'''An exception occured while executing table.get method. [RETURN CODE: {rc}][ERROR: {err}]'''))
     return jsonify(item)
 
-
+def delete(taskId):
+    '''
+    Execute Delete API
+    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Delete.html
+    '''
+    logger.info("### execute delete method")
+    try:
+        key = {"task_id": taskId}
+        table.delete_item(Key={"task_id": taskId})
+        item = key
+    except Exception as err:
+        rc = 1
+        logger.error(f'''An exception occured while executing table.delete method. [RETURN CODE: {rc}][ERROR: {err}]''')
+        raise Exception((f'''An exception occured while executing table.delete method. [RETURN CODE: {rc}][ERROR: {err}]'''))
+    return jsonify(item)
