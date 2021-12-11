@@ -66,8 +66,14 @@ def detail(taskId):
     r = requests.get(taskId_url)
     r.raise_for_status()
     tasks = r.json()
-    print("alive")
     return render_template("detail.html", tasks=tasks)
+
+@app.route("/delete/<taskId>", methods=["GET"])
+def delete(taskId):
+    print("alive")
+    taskId_url = f"""{task_url}/{taskId}"""
+    requests.delete(taskId_url)
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)

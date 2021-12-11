@@ -49,6 +49,9 @@ functions:
       - http:
           path: /tasks/{taskId}
           method: get
+      - http:
+          path: /tasks/{taskId}
+          method: delete
 
 
 resources:
