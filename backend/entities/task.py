@@ -24,10 +24,12 @@ def create(body):
         task_id = str(uuid.uuid4())
         task = body["task"]
         detail = body["detail"]
+        status = body["status"]
         item = {
             "task_id": task_id,
             "task": task,
-            "detail": detail
+            "detail": detail,
+            "status": status
             }
         table.put_item(Item=item)
     except Exception as err:
@@ -53,8 +55,8 @@ def get_all():
 
 def get(taskId):
     '''
-    Execute Get API
-    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Get.html
+    Execute GetItem API
+    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html
     '''
     logger.info("### execute get method")
     try:
@@ -68,8 +70,8 @@ def get(taskId):
 
 def delete(taskId):
     '''
-    Execute Delete API
-    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Delete.html
+    Execute DeleteItem API
+    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html
     '''
     logger.info("### execute delete method")
     try:
@@ -80,4 +82,41 @@ def delete(taskId):
         rc = 1
         logger.error(f'''An exception occured while executing table.delete method. [RETURN CODE: {rc}][ERROR: {err}]''')
         raise Exception((f'''An exception occured while executing table.delete method. [RETURN CODE: {rc}][ERROR: {err}]'''))
+    return jsonify(item)
+
+def update(taskId, body):
+    '''
+    Execute UpdateItem API
+    FYI: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
+    '''
+    logger.info(("### execute update method"))
+    try:
+        task = body["task"]
+        detail = body["detail"]
+        status = body["status"]
+        item = {
+            "task_id": taskId,
+            "task": task,
+            "detail": detail,
+            "status": status
+            }
+        logger.info(("### execute create item"))
+        table.update_item(
+            Key={"task_id": taskId},
+            UpdateExpression="set #task = :task, #detail = :detail, #status = :status",
+            ExpressionAttributeNames = {
+                "#task": "task",
+                "#detail": "detail",
+                "#status": "status",
+            },
+            ExpressionAttributeValues = {
+                ":task": task,
+                ":detail": detail,
+                ":status": status
+            }
+        )
+    except Exception as err:
+        rc = 1
+        logger.error(f'''An exception occured while executing table.update method. [RETURN CODE: {rc}][ERROR: {err}]''')
+        raise Exception((f'''An exception occurred while executing table.update method. [RETURN CODE: {rc}][ERROR: {err}]'''))
     return jsonify(item)
