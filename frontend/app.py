@@ -4,7 +4,7 @@ import requests
 import os
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
-from wtforms import StringField, SubmitField, HiddenField
+from wtforms import StringField, SubmitField, HiddenField, SelectField
 
 load_dotenv()
 
@@ -28,6 +28,7 @@ class TaskForm(FlaskForm):
     # Set task form to add task
     task = StringField(validators=[DataRequired()])
     detail = StringField(validators=[DataRequired()])
+    status = SelectField(validators=[DataRequired()], choices=[("TODO"), ("WIP"), ("DONE")])
     submit = SubmitField("Resister")
 
 # Display top page
@@ -49,9 +50,11 @@ def create():
         if form.validate_on_submit():
             task = request.form.get("task")
             detail = request.form.get("detail")
+            status = request.form.get("status")
             payload = {
                 "task":task,
-                "detail":detail
+                "detail":detail,
+                "status":status
             }
             r = requests.post(task_url, json=payload)
             r.raise_for_status()
@@ -70,10 +73,35 @@ def detail(taskId):
 
 @app.route("/delete/<taskId>", methods=["GET"])
 def delete(taskId):
-    print("alive")
     taskId_url = f"""{task_url}/{taskId}"""
     requests.delete(taskId_url)
     return redirect("/")
+
+@app.route("/update/<taskId>", methods=["GET", "POST"])
+def update(taskId):
+    form = TaskForm()
+    taskId_url = f"""{task_url}/{taskId}"""
+    r = requests.get(taskId_url)
+    r.raise_for_status()
+    tasks = r.json()
+    if request.method == "GET":
+        return render_template("update.html", tasks=tasks, form=form)
+    else:
+        if form.validate_on_submit():
+            print("recieve task")
+            task = request.form.get("task")
+            detail = request.form.get("detail")
+            status = request.form.get("status")
+            payload = {
+                "task":task,
+                "detail":detail,
+                "status":status
+            }
+            requests.put(taskId_url, json=payload)
+            return redirect("/")
+        else:
+            return render_template("update.html", tasks=tasks, form=form)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
