@@ -5,8 +5,13 @@
     <title>TASK RESISTER</title>
 </head>
 <body>
-    <h2>Resister a new task</h2>
-    <form action="/create-task" method="post">
+    <h1>Update a task</h1>
+    <h2>Former task</h2>
+    <h3>TASK: {{ tasks.task }}</h3>
+    <p>DETAIL: {{ tasks.detail }}</p>
+    <p>STATUS: {{ tasks.status }}</p>
+    <br>
+    <form action="/update/{{ tasks.task_id }}" method="post">
         <!-- {{ form.csrf_token }} -->
         {{ form.hidden_tag() }}
 

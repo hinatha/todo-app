@@ -30,3 +30,11 @@ def get_task(taskId):
 def delete_task(taskId):
     print("###e execute delete_task method")
     return task.delete(taskId)
+
+@app.route("/tasks/<taskId>", methods=["PUT"])
+def update_task(taskId):
+    print("### execute put_task method")
+    body = request.get_json()
+    print("PRINT: body")
+    print("body")
+    return task.update(taskId, body)
