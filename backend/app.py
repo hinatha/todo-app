@@ -21,4 +21,20 @@ def get_all_task():
     print("### execute get_all_task method")
     return task.get_all()
 
+@app.route("/tasks/<taskId>", methods=["GET"])
+def get_task(taskId):
+    print("### execute get_task method")
+    return task.get(taskId)
 
+@app.route("/tasks/<taskId>", methods=["DELETE"])
+def delete_task(taskId):
+    print("###e execute delete_task method")
+    return task.delete(taskId)
+
+@app.route("/tasks/<taskId>", methods=["PUT"])
+def update_task(taskId):
+    print("### execute put_task method")
+    body = request.get_json()
+    print("PRINT: body")
+    print("body")
+    return task.update(taskId, body)
