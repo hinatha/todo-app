@@ -1,15 +1,20 @@
 from flask import jsonify
 import uuid
 import boto3
-import json
 import os
 import logging
 
-# Set up logger
+'''
+Execute logger
+FYI: https://hacknote.jp/archives/17690/
+'''
 logger = logging.getLogger("awslog")
 logger.setLevel(logging.INFO)
 
-# Set up dynamoDB table
+'''
+Execute boto3
+FYI: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#table
+'''
 dynamodb = boto3.resource("dynamodb")
 TABLE_NAME = os.environ["DYNAMODB_TABLE"]
 table = dynamodb.Table(TABLE_NAME)
@@ -21,6 +26,10 @@ def create(body):
     '''
     logger.info("### execute create method")
     try:
+        '''
+        Execute uuid
+        FYI: https://docs.python.org/ja/3/library/uuid.html
+        '''
         task_id = str(uuid.uuid4())
         task = body["task"]
         detail = body["detail"]
@@ -33,10 +42,23 @@ def create(body):
             }
         table.put_item(Item=item)
     except Exception as err:
+        '''
+        Execute except
+        https://docs.python.org/ja/3/tutorial/errors.html
+        '''
         rc = 1
         logger.error(f'''An exception occured while executing table.put_item method. [RETURN CODE: {rc}][ERROR: {err}]''')
+        '''
+        Execute raise Exception
+        https://uxmilk.jp/39845
+        '''
         raise Exception((f'''An exception occured while executing table.put_item method. [RETURN CODE: {rc}][ERROR: {err}]'''))
+    '''
+    Execute jsonify
+    FYI: https://admin-it.xyz/python/flask-jsonify-jsondumps-difference/
+    '''
     return jsonify(item)
+    
 
 def get_all():
     '''
@@ -101,6 +123,10 @@ def update(taskId, body):
             "status": status
             }
         logger.info(("### execute create item"))
+        '''
+        Execute update_item
+        FYI: https://dev.classmethod.jp/articles/dynamodb-update-expression-actions/
+        '''
         table.update_item(
             Key={"task_id": taskId},
             UpdateExpression="set #task = :task, #detail = :detail, #status = :status",

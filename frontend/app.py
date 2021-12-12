@@ -14,17 +14,20 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "123456789"
 app.config["WTF_CSRF_ENABLED"] = True
 
-
 # Difine API url
 backend_url = os.getenv("BACKEND_URL", "http://localhost:5000")
 task_url = f"""{backend_url}/tasks"""
 
-
+'''
+Difine taskform
+FYI: https://msiz07-flask-docs-ja.readthedocs.io/ja/latest/patterns/wtforms.html
+'''
 class TaskForm(FlaskForm):
     # For CSRF measures
     hidden_field_1 = HiddenField("HiddenField 1")
     hidden_field_2 = HiddenField("HiddenField 2")
     hidden_field_3 = HiddenField("HiddenField 3")
+    hidden_field_4 = HiddenField("HiddenField 4")
     # Set task form to add task
     task = StringField(validators=[DataRequired()])
     detail = StringField(validators=[DataRequired()])
@@ -34,6 +37,10 @@ class TaskForm(FlaskForm):
 # Display top page
 @app.route("/", methods=["GET"])
 def index():
+    '''
+    Execute requests.get
+    https://qiita.com/sqrtxx/items/49beaa3795925e7de666
+    '''
     r = requests.get(task_url)
     r.raise_for_status()
     tasks = r.json()
@@ -46,7 +53,10 @@ def create():
     if request.method == "GET":
         return render_template("create.html", form=form)
     else:
-        # Send form to server
+        '''
+        Execute form.validate_on_submit()
+        https://flask-wtf.readthedocs.io/en/0.15.x/quickstart/
+        '''
         if form.validate_on_submit():
             task = request.form.get("task")
             detail = request.form.get("detail")

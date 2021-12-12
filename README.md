@@ -35,8 +35,15 @@ This app is able to use below function.
 - Delete tasks.
 - Change status of task.
 - Edit tasks.
-- Do refined search depending on the status.
-- Access the app via internet.
+
+# Using of language, framework, technology
+- Python
+- HTML/CSS
+- Flask
+- Serverless framework
+- Lambda
+- DynamoDB
+- API Gateway
   
 # Requirement
 - Homebrew==3.3.4
@@ -47,7 +54,7 @@ This app is able to use below function.
 - Flask==2.0.2
 - python-dotenv==0.19.2
 - requests==2.26.0
-
+- WTForms==3.0.0
  
 # Installation
  
@@ -61,4 +68,6 @@ This app is able to use below function.
 (.venv) $ python app.py
 ```
  
- 
+# Future plans
+- Dockerizing frontend/backend
+- Deploy by EC2 
